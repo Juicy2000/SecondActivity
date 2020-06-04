@@ -2,7 +2,9 @@ package com.swufe.secondactivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.nfc.Tag;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -12,30 +14,62 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Log.i(TAG, "onCreate: ");
     }
 
-
-    public void btn1(View v) {
-        show(1);
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.i(TAG, "onStart: ");
     }
 
-    public void btn2(View v) {
-        show(2);
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i(TAG, "onResume: ");
     }
 
-    public void btn3(View v) {
-        show(3);
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.i(TAG, "onRestart: ");
     }
 
-    public void btnReset(View v) {
-        TextView out = (TextView)findViewById(R.id.score);
-        out.setText("0");
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.i(TAG, "onPause: ");
     }
 
-    private void show(int i){
-        TextView out = (TextView)findViewById(R.id.score);
-        String oldScore = (String) out.getText();
-        String newScore = String.valueOf(Integer.parseInt(oldScore) + i);
-        out.setText(newScore);
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.i(TAG, "onStop: ");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.i(TAG, "onDestroy: ");
+    }
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        String scorea = ((TextView)findViewById(R.id.score)).getText().toString();
+        String scoreb = ((TextView)findViewById(R.id.score2)).getText().toString();
+
+        Log.i(TAG, "onSaveInstanceState: ");
+        outState.putString("teama_score",scorea);
+        outState.putString("teamb_score",scoreb);
+    }
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        String scorea = savedInstanceState.getString("teama_score");
+        String scoreb = savedInstanceState.getString("teamb_score");
+
+        Log.i(TAG, "onRestoreInstanceState: ");
+        ((TextView)findViewById(R.id.score)).setText(scorea);
+        ((TextView)findViewById(R.id.score2)).setText(scoreb);
     }
 }
